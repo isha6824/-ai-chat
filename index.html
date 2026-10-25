@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A & I Chat</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <main class="app-shell">
+    <section id="authView" class="auth-card">
+      <div class="brand"><span class="brand-heart">💜</span><h1>A & I Chat</h1></div>
+      <p class="muted">Connect · Chat · Share</p>
+      <form id="authForm">
+        <label>Email</label>
+        <input id="email" type="email" autocomplete="email" placeholder="apna email" required>
+        <label>Password</label>
+        <input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="kam se kam 8 characters" required>
+        <div class="auth-actions">
+          <button type="submit" id="loginBtn">Login</button>
+          <button type="button" id="signupBtn" class="secondary">Sign up</button>
+        </div>
+      </form>
+      <p class="hint">A aur I ke liye alag accounts banayein. Ek hi account share karne se dono ki identity aur privacy mix ho jayegi.</p>
+      <p id="authMessage" class="message" role="status"></p>
+    </section>
+
+    <section id="chatView" class="chat-app hidden">
+      <aside class="sidebar">
+        <header class="side-header">
+          <div><div class="brand small"><span class="brand-heart">💜</span><strong>A & I Chat</strong></div><p id="signedInAs" class="muted tiny"></p></div>
+          <button id="logoutBtn" class="icon-button" title="Logout">↪</button>
+        </header>
+        <div class="side-links">
+          <button class="side-link active" data-panel="chatPanel">▣ Chats</button>
+          <button class="side-link" data-panel="profilePanel">◉ Profile / DP</button>
+          <button class="side-link" data-panel="binPanel">♲ Recycle Bin</button>
+        </div>
+        <div class="sidebar-note">Private chat starter<br><span>Realtime · Photo · Video</span></div>
+      </aside>
+
+      <section class="content">
+        <div id="chatPanel" class="panel chat-panel">
+          <header class="chat-header">
+            <div class="avatar" id="peerAvatar">A</div>
+            <div class="peer-info"><strong id="peerName">A & I</strong><span id="peerStatus">Choose a profile</span></div>
+            <button id="refreshBtn" class="icon-button" title="Refresh">↻</button>
+          </header>
+          <div id="setupNotice" class="notice">Pehle apna profile set karein aur doosre account ko bhi profile save karne dein. Dono users ko ek doosre ka profile list mein dikhna chahiye.</div>
+          <div id="messages" class="messages"></div>
+          <div id="mediaPreview" class="media-preview hidden"></div>
+          <form id="messageForm" class="composer">
+            <label class="attach" title="Photo/video bhejein">＋<input id="mediaInput" type="file" accept="image/*,video/*" hidden></label>
+            <input id="messageInput" maxlength="4000" placeholder="Message likhein..." autocomplete="off">
+            <button type="submit" class="send-button">➤</button>
+          </form>
+          <p id="chatMessage" class="message chat-message" role="status"></p>
+        </div>
+
+        <div id="profilePanel" class="panel profile-panel hidden">
+          <h2>Your Profile</h2>
+          <div class="profile-top"><div class="avatar big" id="myAvatar">?</div><div><strong id="myEmail">Signed in</strong><p class="muted">Apna display name aur DP set karein.</p></div></div>
+          <form id="profileForm">
+            <label>Display name (A ya I)</label>
+            <input id="displayName" maxlength="30" placeholder="A ya I" required>
+            <label>About</label>
+            <input id="about" maxlength="120" placeholder="About me">
+            <label>DP photo</label>
+            <input id="avatarInput" type="file" accept="image/*">
+            <button type="submit">Save profile</button>
+          </form>
+          <h3>Chat with</h3>
+          <p class="muted">Neeche doosre account ka profile chunein. Is starter mein private chat do registered accounts ke beech hai.</p>
+          <select id="peerSelect"><option value="">Loading profiles...</option></select>
+          <button id="openPeerBtn" type="button" class="secondary">Open chat</button>
+          <p id="profileMessage" class="message" role="status"></p>
+        </div>
+
+        <div id="binPanel" class="panel bin-panel hidden">
+          <h2>Recycle Bin</h2>
+          <p class="muted">Aapke dwara delete kiye gaye messages yahan restore ya permanently delete kar sakte hain.</p>
+          <div id="binItems" class="bin-items"></div>
+          <p class="hint">Note: yeh user-level recycle bin hai. Permanent deletion ke baad message wapas nahi aayega.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
